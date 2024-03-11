@@ -21,21 +21,165 @@
   cursor: pointer;
 } */
 
-.board {
-  display: grid;
-  grid-template-columns: repeat(3, 100px);
-  grid-template-rows: repeat(3, 100px);
-  gap: 5px;
+/* CSS Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-.cell {
-  border: 1px solid black;
+
+:root {
+  --main-background-color: #22242a;
+  --board-background-color: #1b1e22;
+  --main-theme-color: #1777ff;
+  --primary-text-color: #ffffff;
+  --secondary-text-color: #737373;
+  --font-family: "Inter Tight", sans-serif;
+}
+
+html {
+  font-size: 16px;
+  color: var(--primary-text-color);
+  font-family: var(--font-family);
+}
+
+/* Container */
+.container {
+  background-color: var(--main-background-color);
+  /* height: 100vh; */
+  padding: 20px;
+}
+
+/* Header Section */
+.header-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.header-title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* Player Names Input */
+.player-name-inputs {
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+}
+
+.player-name-input {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 24px;
-  cursor: pointer;
+  padding: 10px 30px;
 }
+
+.player-name-input label {
+  width: 30%;
+}
+
+.player-name-input input {
+  font-family: var(--font-family);
+  width: 50%;
+  font-size: 1rem;
+  padding: 3px 3px 3px 8px;
+  border-radius: 10px;
+  border: none;
+}
+
+/* Button */
+.start-game-button {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.start-game-button button {
+  font-family: var(--font-family);
+  background-color: var(--main-theme-color);
+  color: var(--primary-text-color);
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+}
+
+/* Board */
+.board {
+  /* Issue - handle board background expansion + sizing on screen < 375px */
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: 10px;
+  background-color: var(--board-background-color);
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  cursor: pointer;
+  background-color: var(--main-background-color);
+  border-radius: 10px;
+}
+
+/* Result */
 .result {
-  margin-top: 10px;
-  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  margin: 20px auto;
+  /* Issue - need to handle "hidden" vs "display" for below */
+  /* background-color: var(--main-theme-color);
+  width: 60%;
+  border-radius: 10px;
+  padding: 10px 20px; */
+}
+
+@media screen and (min-width: 500px) {
+  /* Player Names Input */
+  .player-name-inputs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  .player-name-input {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .player-name-input label {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .player-name-input input {
+    width: 100%;
+  }
+
+  /* Button */
+  .start-game-button button {
+    padding: 10px 50px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .player-name-inputs {
+    width: 80%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .player-name-inputs {
+    width: 60%;
+  }
 }

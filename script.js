@@ -1,12 +1,14 @@
 let currentPlayer;
-const player1Input = document.getElementById("player1");
-const player2Input = document.getElementById("player2");
+const player1Input = document.querySelector("#player1");
+const player2Input = document.querySelector("#player2");
 const resultDisplay = document.querySelector(".result");
 const boardElement = document.querySelector(".board");
 
 // Gameboard factory function
 const Gameboard = () => {
   const board = ["", "", "", "", "", "", "", "", ""];
+
+  const getBoard = () => [...board];
 
   const placeMarker = (index, marker) => {
     if (board[index] === "") {
@@ -16,13 +18,11 @@ const Gameboard = () => {
     return false;
   };
 
-  const getBoard = () => [...board];
-
   const resetBoard = () => {
     board.fill("");
   };
 
-  return { placeMarker, getBoard, resetBoard };
+  return { getBoard, placeMarker, resetBoard };
 };
 
 // Player factory function
@@ -75,6 +75,7 @@ const gameController = (() => {
       [0, 4, 8],
       [2, 4, 6], // diagonals
     ];
+
     for (const condition of winConditions) {
       const [a, b, c] = condition;
       if (board[a] !== "" && board[a] === board[b] && board[a] === board[c]) {

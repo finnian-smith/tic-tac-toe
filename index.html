@@ -3,29 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css" />
     <title>Tic Tac Toe</title>
   </head>
   <body>
-    <!-- 
     <div class="container">
-      <h1 class="turn"></div>
-      <div class="board"></div>
+      <div class="header-section">
+        <p class="header-title">Tic-Tac-Toe</p>
+      </div>
+      <div class="player-name-inputs">
+        <div class="player-name-input">
+          <label for="player1">Player 1</label>
+          <input type="text" id="player1" placeholder="Enter name" />
+        </div>
+        <div class="player-name-input">
+          <label for="player2">Player 2</label>
+          <input type="text" id="player2" placeholder="Enter name" />
+        </div>
+      </div>
+      <div class="start-game-button">
+        <button onclick="startGame()">Play Game</button>
+      </div>
+      <div class="board" onclick="handleCellClick(event)"></div>
+      <div class="result"></div>
     </div>
-    -->
-
-    <!-- NEW -->
-    <div>
-      <label for="player1">Player 1:</label>
-      <input type="text" id="player1" placeholder="Enter name" />
-    </div>
-    <div>
-      <label for="player2">Player 2:</label>
-      <input type="text" id="player2" placeholder="Enter name" />
-    </div>
-    <button onclick="startGame()">Start Game</button>
-    <div class="board" onclick="handleCellClick(event)"></div>
-    <div class="result"></div>
 
     <script src="script.js"></script>
   </body>
