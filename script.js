@@ -1,148 +1,113 @@
-// Gameboard -> create board and actions
-const gameboard = (function () {
-  const rows = 3;
-  const columns = 3;
-  let board = [];
+let currentPlayer;
+const player1Input = document.getElementById("player1");
+const player2Input = document.getElementById("player2");
+const resultDisplay = document.querySelector(".result");
+const boardElement = document.querySelector(".board");
 
-  function createBoard() {
-    for (let i = 0; i < rows; i++) {
-      let row = [];
-      for (let j = 0; j < columns; j++) {
-        row.push(null);
-      }
-      board.push(row);
-    }
-  }
+// Gameboard factory function
+const Gameboard = () => {
+  const board = ["", "", "", "", "", "", "", "", ""];
 
-  createBoard(); // create board when module is loaded
-
-  const getBoard = () => board;
-
-  function displayBoard() {
-    console.log("Current Board:");
-    for (let i = 0; i < rows; i++) {
-      console.log(board[i].join("|"));
-    }
-  }
-
-  const placeMarker = (row, column, marker) => {
-    if (board[row][column] === null) {
-      board[row][column] = marker;
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  const resetBoard = () => {
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < columns; j++) {
-        board[i][j] = null;
-      }
-    }
-  };
-
-  return { getBoard, displayBoard, placeMarker, resetBoard };
-})();
-
-// Player -> create players
-function createPlayer(name, marker) {
-  return { name, marker };
-}
-
-// Game -> controls flow of the game
-const gameController = (() => {
-  const player1 = createPlayer("John", "X");
-  const player2 = createPlayer("Mary", "O");
-  let gameOver = false;
-
-  let activePlayer = player1;
-
-  const playRound = () => {
-    while (!gameOver) {
-      console.log(`${activePlayer.name} it's your turn!`);
-      gameboard.displayBoard();
-      let row = prompt("Row: ");
-      let col = prompt("Column: ");
-      gameboard.placeMarker(row, col, activePlayer.marker);
-      gameboard.displayBoard();
-      checkGameOver();
-      switchPlayer();
-    }
-  };
-
-  const getActivePlayer = () => activePlayer;
-
-  const switchPlayer = () => {
-    activePlayer = activePlayer === player1 ? player2 : player1;
-  };
-
-  const checkWin = () => {
-    const marker = activePlayer.marker;
-    const board = gameboard.getBoard();
-
-    // Row or column win
-    for (let i = 0; i < board.length; i++) {
-      if (
-        (board[i][0] === marker &&
-          board[i][1] === marker &&
-          board[i][2] === marker) ||
-        (board[0][i] === marker &&
-          board[1][i] === marker &&
-          board[2][i] === marker)
-      ) {
-        console.log(`${activePlayer.name} wins!`);
-        return true;
-      }
-    }
-
-    // Diagonal win
-    if (
-      (board[0][0] === marker &&
-        board[1][1] === marker &&
-        board[2][2] === marker) ||
-      (board[0][2] === marker &&
-        board[1][1] === marker &&
-        board[2][0] === marker)
-    ) {
-      console.log(`${activePlayer.name} wins!`);
+  const placeMarker = (index, marker) => {
+    if (board[index] === "") {
+      board[index] = marker;
       return true;
     }
-
     return false;
   };
 
-  const checkDraw = () => {
-    const board = gameboard.getBoard();
+  const getBoard = () => [...board];
 
-    // Check if board is full
-    for (let i = 0; i < board.length; i++) {
-      for (let j = 0; j < board[i].length; j++) {
-        if (board[i][j] === null) {
-          return false;
-        }
+  const resetBoard = () => {
+    board.fill("");
+  };
+
+  return { placeMarker, getBoard, resetBoard };
+};
+
+// Player factory function
+const Player = (name, marker) => ({ name, marker });
+
+// Game controller module
+const gameController = (() => {
+  let player1, player2;
+  let gameStarted = false;
+  const gameboard = Gameboard();
+
+  const startGame = () => {
+    const name1 = player1Input.value.trim() || "Player 1";
+    const name2 = player2Input.value.trim() || "Player 2";
+    player1 = Player(name1, "X");
+    player2 = Player(name2, "O");
+    currentPlayer = player1;
+    gameStarted = true;
+    resultDisplay.textContent = "";
+    gameboard.resetBoard();
+    updateBoard();
+  };
+
+  const playRound = (index) => {
+    if (!gameStarted) return;
+    if (gameboard.placeMarker(index, currentPlayer.marker)) {
+      if (checkWin()) {
+        resultDisplay.textContent = `${currentPlayer.name} wins!`;
+        gameStarted = false;
+      } else if (checkDraw()) {
+        resultDisplay.textContent = "It's a draw!";
+        gameStarted = false;
+      } else {
+        currentPlayer = currentPlayer === player1 ? player2 : player1;
+        // updateBoard();
+      }
+      updateBoard();
+    }
+  };
+
+  const checkWin = () => {
+    const board = gameboard.getBoard();
+    const winConditions = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8], // rows
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8], // columns
+      [0, 4, 8],
+      [2, 4, 6], // diagonals
+    ];
+    for (const condition of winConditions) {
+      const [a, b, c] = condition;
+      if (board[a] !== "" && board[a] === board[b] && board[a] === board[c]) {
+        return true;
       }
     }
-    console.log("It's a tie!");
-    return true; // Board is full = draw
+    return false;
   };
 
-  const checkGameOver = () => {
-    if (checkWin() || checkDraw()) {
-      gameOver = true;
-    }
+  const checkDraw = () => !gameboard.getBoard().includes("");
+
+  const updateBoard = () => {
+    boardElement.innerHTML = "";
+    gameboard.getBoard().forEach((cell, index) => {
+      const cellElement = document.createElement("div");
+      cellElement.classList.add("cell");
+      cellElement.dataset.index = index;
+      cellElement.textContent = cell;
+      boardElement.appendChild(cellElement);
+    });
   };
 
-  return {
-    playRound,
-    getActivePlayer,
-    switchPlayer,
-    checkWin,
-    checkDraw,
-    checkGameOver,
-  };
+  return { startGame, playRound };
 })();
 
-const game = gameController;
+// Event handler for cell clicks
+function handleCellClick(event) {
+  if (!event.target.classList.contains("cell")) return;
+  const index = parseInt(event.target.dataset.index);
+  gameController.playRound(index);
+}
 
-gameController.playRound();
+// Start the game
+function startGame() {
+  gameController.startGame();
+}

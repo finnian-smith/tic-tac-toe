@@ -7,6 +7,26 @@
     <title>Tic Tac Toe</title>
   </head>
   <body>
+    <!-- 
+    <div class="container">
+      <h1 class="turn"></div>
+      <div class="board"></div>
+    </div>
+    -->
+
+    <!-- NEW -->
+    <div>
+      <label for="player1">Player 1:</label>
+      <input type="text" id="player1" placeholder="Enter name" />
+    </div>
+    <div>
+      <label for="player2">Player 2:</label>
+      <input type="text" id="player2" placeholder="Enter name" />
+    </div>
+    <button onclick="startGame()">Start Game</button>
+    <div class="board" onclick="handleCellClick(event)"></div>
+    <div class="result"></div>
+
     <script src="script.js"></script>
   </body>
 </html>
