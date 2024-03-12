@@ -35,8 +35,8 @@ const gameController = (() => {
   const gameboard = Gameboard();
 
   const startGame = () => {
-    const name1 = player1Input.value.trim() || "Player 1";
-    const name2 = player2Input.value.trim() || "Player 2";
+    const name1 = player1Input.value.trim() || "Player X";
+    const name2 = player2Input.value.trim() || "Player O";
     player1 = Player(name1, "X");
     player2 = Player(name2, "O");
     currentPlayer = player1;
@@ -96,6 +96,7 @@ const gameController = (() => {
       cellElement.classList.add("cell");
       cellElement.dataset.index = index;
       cellElement.textContent = cell;
+      cellElement.setAttribute("data-marker", cell); // testing
       boardElement.appendChild(cellElement);
     });
   };

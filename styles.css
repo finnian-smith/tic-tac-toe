@@ -12,6 +12,8 @@
   --primary-text-color: #ffffff;
   --secondary-text-color: #737373;
   --button-hover-background-color: #4b92f4;
+  --x-cell-data-marker-color: #6c9bcf;
+  --o-cell-data-marker-color: #a5c0dd;
   --font-family: "Inter Tight", sans-serif;
 }
 
@@ -129,6 +131,14 @@ html {
 
 .cell:not(:empty):hover {
   cursor: not-allowed;
+}
+
+.cell[data-marker="X"] {
+  color: var(--x-cell-data-marker-color);
+}
+
+.cell[data-marker="O"] {
+  color: var(--o-cell-data-marker-color);
 }
 
 /* Result */
