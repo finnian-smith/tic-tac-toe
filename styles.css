@@ -1,26 +1,3 @@
-/* .board {
-  display: grid;
-  height: 500px;
-  width: 500px;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  border: 1px solid black;
-  gap: 2px;
-  padding: 2px;
-  background-color: yellow;
-}
-
-.cell {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: 2rem;
-  border: 1px solid grey;
-  background: lightyellow;
-  cursor: pointer;
-} */
-
 /* CSS Reset */
 * {
   box-sizing: border-box;
@@ -34,6 +11,7 @@
   --main-theme-color: #1777ff;
   --primary-text-color: #ffffff;
   --secondary-text-color: #737373;
+  --button-hover-background-color: #4b92f4;
   --font-family: "Inter Tight", sans-serif;
 }
 
@@ -109,6 +87,12 @@ html {
   padding: 10px 20px;
   border: none;
   border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.start-game-button button:hover {
+  cursor: pointer;
+  background-color: var(--button-hover-background-color);
 }
 
 /* Board */
@@ -134,10 +118,17 @@ html {
   justify-content: center;
   align-items: center;
   font-size: 3rem;
-  /* maybe handle cursor as hover? */
-  cursor: pointer;
   background-color: var(--main-background-color);
   border-radius: 10px;
+}
+
+.cell:empty:hover {
+  cursor: pointer;
+  background-color: var(--main-theme-color);
+}
+
+.cell:not(:empty):hover {
+  cursor: not-allowed;
 }
 
 /* Result */
@@ -149,6 +140,9 @@ html {
   width: 80%;
   border-radius: 10px;
   padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 @media screen and (min-width: 500px) {
