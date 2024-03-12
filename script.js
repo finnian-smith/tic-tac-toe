@@ -42,6 +42,7 @@ const gameController = (() => {
     currentPlayer = player1;
     gameStarted = true;
     resultDisplay.textContent = "";
+    resultDisplay.style.display = "none";
     gameboard.resetBoard();
     updateBoard();
   };
@@ -51,13 +52,14 @@ const gameController = (() => {
     if (gameboard.placeMarker(index, currentPlayer.marker)) {
       if (checkWin()) {
         resultDisplay.textContent = `${currentPlayer.name} wins!`;
+        resultDisplay.style.display = "flex";
         gameStarted = false;
       } else if (checkDraw()) {
         resultDisplay.textContent = "It's a draw!";
+        resultDisplay.style.display = "flex";
         gameStarted = false;
       } else {
         currentPlayer = currentPlayer === player1 ? player2 : player1;
-        // updateBoard();
       }
       updateBoard();
     }

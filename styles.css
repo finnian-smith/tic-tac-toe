@@ -51,7 +51,7 @@ html {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 20px;
+  padding: 20px 20px 40px 20px;
 }
 
 /* Header Section */
@@ -142,14 +142,13 @@ html {
 
 /* Result */
 .result {
-  display: flex;
+  display: none;
   justify-content: center;
-  margin: 20px auto;
-  /* Issue - need to handle "hidden" vs "display" for below */
-  /* background-color: var(--main-theme-color);
-  width: 60%;
+  margin: 30px auto 0;
+  background-color: var(--main-theme-color);
+  width: 80%;
   border-radius: 10px;
-  padding: 10px 20px; */
+  padding: 10px 20px;
 }
 
 @media screen and (min-width: 500px) {
@@ -178,6 +177,10 @@ html {
   .start-game-button button {
     padding: 10px 50px;
   }
+
+  .result {
+    width: 50%;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -193,10 +196,18 @@ html {
   .cell {
     font-size: 5rem;
   }
+
+  .result {
+    width: 40%;
+  }
 }
 
 @media screen and (min-width: 1024px) {
   .player-name-inputs {
     width: 60%;
+  }
+
+  .result {
+    width: 30%;
   }
 }
